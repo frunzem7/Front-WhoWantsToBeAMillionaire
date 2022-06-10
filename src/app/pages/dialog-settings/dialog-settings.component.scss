@@ -1,0 +1,73 @@
+.full-width {
+  width: 100%;
+}
+
+.example-viewport {
+  height: 450px;
+  width: 700px;
+  border: 1px solid #ffffff;
+}
+
+.example-item {
+  height: 50px;
+}
+
+h3 {
+  color: #4f4ad3;
+  text-align: center;
+}
+
+//.mat-button-add-left {
+//  position: absolute;
+//  bottom: 8px;
+//  left: 16px;
+//  font-size: 18px;
+//}
+
+.mat-button-cancel-right {
+  position: sticky;
+  bottom: 8px;
+  right: 16px;
+  font-size: 18px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.delete-button {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 15px;
+}
+
+.save-button {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  font-size: 15px;
+}
+
+.mat-form-field + .mat-form-field {
+  margin-left: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.mat-radio-button {
+  margin: 5px;
+}
+
+.flex-container {
+  display: flex;
+}

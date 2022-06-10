@@ -1,0 +1,50 @@
+<mat-card>
+  <mat-card-title>
+    <h3>Settings</h3>
+  </mat-card-title>
+
+  <cdk-virtual-scroll-viewport appendOnly itemSize="20" class="example-viewport">
+    <div class="flex-container">
+      <mat-accordion>
+
+        <mat-expansion-panel hideToggle *cdkVirtualFor="let question of questions let i = index;">
+          <mat-expansion-panel-header>{{question.question}}</mat-expansion-panel-header>
+          <mat-card>
+            <div *ngFor="let answer of answers let i = index;">
+              {{answer.question}}
+            </div>
+            <mat-card-content>
+              <button mat-raised-button color="primary" mat-button class="save-button"
+                      (click)="save()">
+                Edit
+              </button>
+              <button mat-raised-button color="primary" mat-button class="delete-button"
+                      (click)="deleteById(0)">
+                Delete
+              </button>
+
+            </mat-card-content>
+          </mat-card>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </div>
+  </cdk-virtual-scroll-viewport>
+
+  <mat-card-actions>
+    <button mat-mini-fab color="primary" mat-button class="mat-button-add-left"
+            (click)="openDialogAdd()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <button mat-mini-fab color="primary" mat-button class="mat-button-cancel-right"
+            (click)="cancel()">
+      <mat-icon> cancel_presentation</mat-icon>
+    </button>
+  </mat-card-actions>
+
+</mat-card>
