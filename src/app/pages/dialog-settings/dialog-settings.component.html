@@ -7,28 +7,26 @@
     <div class="flex-container">
       <mat-accordion>
 
-        <mat-expansion-panel hideToggle *cdkVirtualFor="let question of questions let i = index;">
+<!--        <mat-expansion-panel hideToggle *cdkVirtualFor="let question of questions; let i = index;"-->
+<!--                             (click)="onClick(question.id)">-->
+        <mat-expansion-panel hideToggle *cdkVirtualFor="let question of questions; let i = index;"
+                             (afterExpand)="" )="onClick(question.id)">
           <mat-expansion-panel-header>{{question.question}}</mat-expansion-panel-header>
-          <mat-card>
-            <div *ngFor="let answer of answers let i = index;">
-              {{answer.question}}
-            </div>
-            <mat-card-content>
-              <button mat-raised-button color="primary" mat-button class="save-button"
-                      (click)="save()">
-                Edit
-              </button>
-              <button mat-raised-button color="primary" mat-button class="delete-button"
-                      (click)="deleteById(0)">
-                Delete
-              </button>
 
-            </mat-card-content>
-          </mat-card>
-        </mat-expansion-panel>
+          <div class="question" *ngFor="let answer of answers; let i = index">
+            {{answer.answer}}
+          </div>
 
-        <mat-expansion-panel (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false">
+          <button mat-raised-button color="primary" mat-button class="save-button"
+                  (click)="openDialogEdit(question)">
+            Edit
+          </button>
+
+          <button mat-raised-button color="primary" mat-button class="delete-button"
+                  (click)="deleteById(question?.id)">
+            Delete
+          </button>
+
         </mat-expansion-panel>
 
       </mat-accordion>

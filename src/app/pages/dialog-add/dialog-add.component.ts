@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {QuestionDto} from "../../@core/dtos/QuestionDto";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatDialogRef} from "@angular/material/dialog";
 import {AnswerDto} from "../../@core/dtos/AnswerDto";
 import {QuestionComponent} from "../question/question.component";
 import {AnswerService} from "../../@core/services/answer/answer.service";
@@ -22,12 +22,9 @@ export class DialogAddComponent implements OnInit {
   answers: AnswerDto[] = [];
   editing: boolean = false;
   form!: FormGroup;
-  isCorrect!: number;
   correctAnswer!: number;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialog: MatDialog,
     private answerService: AnswerService,
     private questionService: QuestionService,
     public dialogRef: MatDialogRef<DialogAddComponent>,
@@ -47,6 +44,7 @@ export class DialogAddComponent implements OnInit {
   }
 
   public async save(): Promise<void> {
+    console.log(this.answersComponents)
     console.log(this.question);
     console.log(this.questionComponent);
     this.question.question = this.questionComponent.form.get("question")?.value;
@@ -56,15 +54,14 @@ export class DialogAddComponent implements OnInit {
     console.log(questionDto)
     console.log(this.answers[this.correctAnswer])
     console.log(this.correctAnswer)
-    console.log(this.answersComponents)
     for (let i = 0; i < this.answers.length; i++) {
       this.answers[i].answer = this.answersComponents.get(i)?.answer;
       this.answers[i].question = questionDto;
     }
     console.log(this.answers)
-    this.answers[this.correctAnswer].isCorrect = true;
+    console.log(questionDto);
     for (let i = 0; i < this.answers.length; i++) {
-      let a = await this.answerService.save(this.answers[i]);
+      await this.answerService.save(this.answers[i]);
     }
   }
 

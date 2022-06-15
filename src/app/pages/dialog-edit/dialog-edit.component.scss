@@ -1,0 +1,37 @@
+.full-width {
+  width: 100%;
+}
+
+.mat-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.mat-radio-button {
+  margin: 5px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.mat-button-cancel-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 15px;
+}
+
+.mat-button-save-right {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  font-size: 15px;
+}
+
+h3 {
+  color: #4f4ad3;
+  text-align: center;
+}

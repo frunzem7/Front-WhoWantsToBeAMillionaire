@@ -33,6 +33,6 @@ export class QuestionService {
   }
 
   deleteById(id: number): Promise<QuestionDto> {
-    return lastValueFrom(this.http.delete<QuestionDto>(`${this.url}//${id}`));
+    return lastValueFrom(this.http.delete<QuestionDto>(`${this.url}/${id}`));
   }
 }

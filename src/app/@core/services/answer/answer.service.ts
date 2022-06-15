@@ -36,7 +36,7 @@ export class AnswerService {
     return lastValueFrom(this.http.delete<AnswerDto>(`${this.url}/${id}`));
   }
 
-  getAllByQuestionId(id: string): Promise<AnswerDto> {
-    return lastValueFrom(this.http.delete<AnswerDto>(`${this.url}/all/question/${id}`));
+  getAllByQuestionId(id: number): Promise<AnswerDto[]> {
+    return lastValueFrom(this.http.get<AnswerDto[]>(`${this.url}/all/question/${id}`));
   }
 }

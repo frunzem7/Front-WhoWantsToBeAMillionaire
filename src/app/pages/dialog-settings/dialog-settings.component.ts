@@ -7,6 +7,7 @@ import {DialogAddComponent} from "../dialog-add/dialog-add.component";
 import {AnswerDto} from "../../@core/dtos/AnswerDto";
 import {AnswerService} from "../../@core/services/answer/answer.service";
 import {MatRadioChange} from "@angular/material/radio";
+import {DialogEditComponent} from "../dialog-edit/dialog-edit.component";
 
 @Component({
   selector: 'app-dialog-settings',
@@ -23,7 +24,6 @@ export class DialogSettingsComponent implements OnInit {
   form!: FormGroup;
   editing: boolean = false;
   correct: any;
-  panelOpenState = false;
   correctAnswer!: number;
 
   constructor(
@@ -39,7 +39,6 @@ export class DialogSettingsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.initForm();
     await this.getAll();
-    await this.getAllByQuestionId('id');
     for (let i = 0; i < 4; i++) {
       let x = new AnswerDto();
       this.answers.push(x);
@@ -48,6 +47,7 @@ export class DialogSettingsComponent implements OnInit {
 
   initForm(data?: AnswerDto): void {
     this.form = this.formBuilder.group({
+      question: [data && data.question ? data.question : '', [Validators.required]],
       answer: [data && data.answer ? data.answer : '', [Validators.required]],
     })
   }
@@ -57,6 +57,12 @@ export class DialogSettingsComponent implements OnInit {
     this.correctAnswer = event.value;
   }
 
+  async onClick(question: any): Promise<void> {
+    console.log(question)
+    this.currentQuestion = question;
+    const ans = await this.getAllByQuestionId(1);
+  }
+
   public async getAll(): Promise<void> {
     try {
       this.questions = await this.questionService.getAll();
@@ -64,15 +70,6 @@ export class DialogSettingsComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  cancel() {
-    this.dialogRef.close();
-  }
-
-  openDialogAdd() {
-    this.dialog.open(DialogAddComponent).afterClosed().subscribe(response => {
-    });
   }
 
   async save(): Promise<void> {
@@ -103,12 +100,27 @@ export class DialogSettingsComponent implements OnInit {
     }
   }
 
-  public async getAllByQuestionId(id: string): Promise<void> {
+  public async getAllByQuestionId(id: number): Promise<any> {
     try {
-      await this.answerService.getAllByQuestionId(id);
-      console.log(this.questions);
+      const answer: AnswerDto[] = await this.answerService.getAllByQuestionId(id);
+      this.answers = answer;
+      console.log(answer);
     } catch (error) {
       console.log(error);
     }
+  }
+
+  openDialogAdd() {
+    this.dialog.open(DialogAddComponent).afterClosed().subscribe(response => {
+    });
+  }
+
+  openDialogEdit(question?: QuestionDto) {
+    this.dialog.open(DialogEditComponent).afterClosed().subscribe(response => {
+    });
+  }
+
+  cancel() {
+    this.dialogRef.close();
   }
 }

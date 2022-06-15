@@ -1,1 +1,28 @@
-<p>dialog-edit works!</p>
+<mat-card>
+  <mat-card-content>
+    <h3>Edit a question</h3>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Question</mat-label>
+      <input id="question" matInput [ngModel]="question" type="text">
+    </mat-form-field>
+
+    <div>
+      <mat-radio-group (change)="onAnswerChange($event)" name="answers">
+        <mat-radio-button *ngFor="let option of answers; let i = index;" [value]="i">
+          <mat-form-field appearance="fill">
+            <mat-label>Answer</mat-label>
+            <input matInput [ngModel]="answers" type="text">
+          </mat-form-field>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button color="primary" class="mat-button-save-right">Save</button>
+
+    <button mat-button color="primary" class="mat-button-cancel-right" (click)="cancel()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

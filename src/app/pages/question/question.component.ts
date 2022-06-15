@@ -1,8 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {QuestionDto} from "../../@core/dtos/QuestionDto";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {AnswerDto} from "../../@core/dtos/AnswerDto";
 
 @Component({
   selector: 'app-question',
@@ -17,6 +18,7 @@ export class QuestionComponent implements OnInit {
   public questions: QuestionDto[] = [];
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<QuestionComponent>,
@@ -25,6 +27,10 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    for (let i = 0; i < 15; i++) {
+      let x = new QuestionDto();
+      this.questions.push(x);
+    }
   }
 
   initForm(data?: QuestionDto): void {

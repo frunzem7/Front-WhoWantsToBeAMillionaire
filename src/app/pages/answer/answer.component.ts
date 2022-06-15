@@ -1,7 +1,7 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AnswerDto} from "../../@core/dtos/AnswerDto";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-answer',
@@ -14,7 +14,6 @@ export class AnswerComponent implements OnInit {
   editing: boolean = false;
   mainPage: AnswerDto = new AnswerDto();
 
-
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -26,13 +25,13 @@ export class AnswerComponent implements OnInit {
     this.initForm();
   }
 
-  initForm(data?: AnswerDto): void {
+  initForm(): void {
     this.form = this.formBuilder.group({
-      answer: [data && data.answer ? data.answer : '', [Validators.required]],
+      answer: ['', [Validators.required]],
     })
   }
 
-  onAnswerChange() {
+  check() {
     this.answer = this.form.get("answer")?.value;
   }
 }

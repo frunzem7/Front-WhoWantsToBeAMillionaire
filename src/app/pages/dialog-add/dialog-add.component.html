@@ -6,7 +6,7 @@
     <div>
       <mat-radio-group (change)="onAnswerChange($event)" name="answers">
         <mat-radio-button *ngFor="let option of answers; let i = index;" [value]="i">
-          <app-answer>{{answers}}</app-answer>
+          <app-answer></app-answer>
         </mat-radio-button>
       </mat-radio-group>
     </div>
