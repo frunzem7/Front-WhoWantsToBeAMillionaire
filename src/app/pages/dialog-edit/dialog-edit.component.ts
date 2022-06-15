@@ -8,6 +8,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatRadioChange} from "@angular/material/radio";
 import {QuestionService} from "../../@core/services/question/question.service";
 import {AnswerService} from "../../@core/services/answer/answer.service";
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-dialog-edit',
@@ -55,10 +56,13 @@ export class DialogEditComponent implements OnInit {
         answers: this.formBuilder.array(this.answers)
       })
     })
-    this.patch();
   }
+
   patch() {
     const control = <FormArray>this.form.get('answerGroup.answers');
+    console.log(control.value);
+    console.log(this.answers);
+    // control.setValue([]);
     this.answers.forEach(x => {
       control.push(this.patchValues(x.isCorrect, x.answer, x.id))
     });
@@ -73,9 +77,30 @@ export class DialogEditComponent implements OnInit {
     })
   }
 
-  onAnswerChange(event: MatRadioChange) {
-    console.log(event.value)
-    this.correctAnswer = event.value;
+  onAnswerChange(event: any) {
+  //   // console.log(this.answers);
+  //   console.log(event);
+  //   const answerToSave = this.answers.filter(a=>a.id == event.value);
+  //   answerToSave.isCorrect = true;
+  //   this.answerService.update(this.answers,)
+
+    (this.form.get('answerGroup.answers')?.value as any[]).forEach(answer=>{
+        answer.isCorrect = answer.id === event.value;
+        this.answerService.update(answer);
+    });
+
+    // console.log(this.form);
+    //
+    // this.correctAnswer = event.value;
+    // console.log(this.correctAnswer);
+    // for (let i = 0; i < this.answers.length; i++) {
+    //   this.answers[i].isCorrect = false;
+    //   if (this.answers[i].id == this.correctAnswer) {
+    //     this.answers[i].isCorrect = true;
+    //   }
+    // }
+    //
+    // console.log(this.answers);
   }
 
   public async getById(id: number): Promise<void> {
@@ -98,15 +123,16 @@ export class DialogEditComponent implements OnInit {
   }
 
   public async update(): Promise<void> {
-    try {
-      const data = await this.answerService.update(this.answersDto);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      this.form.reset();
-    }
-    this.dialogRef.close();
+    // try {
+    //   const data = await this.answerService.update(this.answersDto);
+    //   console.log(data);
+    // } catch (error) {
+    //   console.log(error);
+    // } finally {
+    //   this.form.reset();
+    // }
+    // this.dialogRef.close();
+    //await this.questionService
   }
 
   cancel() {
@@ -114,6 +140,25 @@ export class DialogEditComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.answers);
+    this.form.get('answers')?.setValue([]);
     console.log("form ", this.form)
+  }
+
+  async updateAnswer(answer: any, event: any) {
+    // console.log(event);
+    // console.log(answer);
+    // for (let i = 0; i < this.answers.length; i++) {
+    //   if (this.answers[i].id == answer.id) {
+    //     this.answers[i].answer = event.srcElement.value;
+    //   }
+    // }
+    // console.log(this.answers);
+    await this.answerService.update(answer);
+  }
+
+  async updateQuestion(){
+    const question = this.form.get('question')?.value;
+   await this.questionService.update(question);
   }
 }

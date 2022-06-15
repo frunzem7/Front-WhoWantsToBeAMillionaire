@@ -4,22 +4,34 @@
       <h3>Edit a question</h3>
       <mat-form-field appearance="fill">
         <mat-label>Question</mat-label>
-        <input id="question" matInput type="text" formControlName="question">
+        <input (change)="updateQuestion()" id="question" matInput type="text" formControlName="question">
       </mat-form-field>
 
-      <div formGroupName="answerGroup">
-        <mat-radio-group (change)="onAnswerChange($event)" name="answers" formArrayName="answers">
-          <ng-container *ngFor="let answer of form.get('answerGroup.answers').value; let i = index;"
-                        [formGroupName]="i">
-            <mat-radio-button [checked]="answer.isCorrect" [value]="answer.id" formControlName="isCorrect">
-              <mat-form-field appearance="fill">
-                <mat-label>Answer</mat-label>
-                <input matInput type="text" placeholder="answer" formControlName="answer" [value]="answer?.answer">
-              </mat-form-field>
-            </mat-radio-button>
-          </ng-container>
+      <div>
+        <mat-radio-group (change)="onAnswerChange($event)" name="answers" formControlName="answers">
+          <mat-radio-button *ngFor="let answer of answers"
+                            [checked]="answer.isCorrect" [value]="answer.id">
+            <mat-form-field appearance="fill">
+              <mat-label>Answer</mat-label>
+              <input (change)="updateAnswer(answer, $event)" matInput type="text" placeholder="answer" [value]="answer?.answer">
+            </mat-form-field>
+          </mat-radio-button>
         </mat-radio-group>
       </div>
+
+      <!--      <div formGroupName="answerGroup">-->
+      <!--        <mat-radio-group (change)="onAnswerChange($event)" name="answers" formArrayName="answers">-->
+      <!--          <ng-container *ngFor="let answer of form.get('answerGroup.answers').value; let i = index;"-->
+      <!--                        [formGroupName]="i">-->
+      <!--            <mat-radio-button [checked]="answer.isCorrect" [value]="answer.id" formControlName="isCorrect">-->
+      <!--              <mat-form-field appearance="fill">-->
+      <!--                <mat-label>Answer</mat-label>-->
+      <!--                <input matInput type="text" placeholder="answer" formControlName="answer" [value]="answer?.answer">-->
+      <!--              </mat-form-field>-->
+      <!--            </mat-radio-button>-->
+      <!--          </ng-container>-->
+      <!--        </mat-radio-group>-->
+      <!--      </div>-->
 
     </mat-card-content>
 
