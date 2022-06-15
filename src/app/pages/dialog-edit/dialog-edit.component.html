@@ -1,28 +1,38 @@
 <mat-card>
-  <mat-card-content>
-    <h3>Edit a question</h3>
+  <form class="example-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-card-content>
+      <h3>Edit a question</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>Question</mat-label>
+        <input id="question" matInput type="text" formControlName="question">
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Question</mat-label>
-      <input id="question" matInput [ngModel]="question" type="text">
-    </mat-form-field>
+      <div formGroupName="answerGroup">
+        <mat-radio-group (change)="onAnswerChange($event)" name="answers" formArrayName="answers">
+          <ng-container *ngFor="let answer of form.get('answerGroup.answers').value; let i = index;"
+                        [formGroupName]="i">
+            <mat-radio-button [checked]="answer.isCorrect" [value]="answer.id" formControlName="isCorrect">
+              <mat-form-field appearance="fill">
+                <mat-label>Answer</mat-label>
+                <input matInput type="text" placeholder="answer" formControlName="answer" [value]="answer?.answer">
+              </mat-form-field>
+            </mat-radio-button>
+          </ng-container>
+        </mat-radio-group>
+      </div>
 
-    <div>
-      <mat-radio-group (change)="onAnswerChange($event)" name="answers">
-        <mat-radio-button *ngFor="let option of answers; let i = index;" [value]="i">
-          <mat-form-field appearance="fill">
-            <mat-label>Answer</mat-label>
-            <input matInput [ngModel]="answers" type="text">
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
+    </mat-card-content>
 
-  </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="primary" class="mat-button-save-right" type="submit"
+              [disabled]="form.invalid">
+        {{actionButton}}
+      </button>
 
-  <mat-card-actions>
-    <button mat-button color="primary" class="mat-button-save-right">Save</button>
+      <button mat-button color="primary" class="mat-button-cancel-right" (click)="cancel()">
+        Cancel
+      </button>
+    </mat-card-actions>
 
-    <button mat-button color="primary" class="mat-button-cancel-right" (click)="cancel()">Cancel</button>
-  </mat-card-actions>
+  </form>
 </mat-card>

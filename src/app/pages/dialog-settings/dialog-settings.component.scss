@@ -8,22 +8,6 @@
   border: 1px solid #ffffff;
 }
 
-.question {
-  background-color: black;
-  border: 2px solid #1488e8;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  margin-bottom: 20px;
-  height: 15px;
-  word-break: break-word;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 25px;
-  pointer-events: none;
-}
-
 .example-item {
   height: 50px;
 }
@@ -32,19 +16,18 @@ h3 {
   color: #4f4ad3;
   text-align: center;
 }
-
-//.mat-button-add-left {
-//  position: absolute;
-//  bottom: 8px;
-//  left: 16px;
-//  font-size: 18px;
-//}
+.mat-button-add-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  font-size: 15px;
+}
 
 .mat-button-cancel-right {
-  position: sticky;
+  position: absolute;
   bottom: 8px;
   right: 16px;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .flex-container {
@@ -58,7 +41,7 @@ h3 {
   font-size: 15px;
 }
 
-.save-button {
+.edit-button {
   position: absolute;
   bottom: 8px;
   left: 16px;
@@ -87,3 +70,4 @@ h3 {
 .flex-container {
   display: flex;
 }
+

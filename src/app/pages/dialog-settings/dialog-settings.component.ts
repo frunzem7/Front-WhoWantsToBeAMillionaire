@@ -6,7 +6,6 @@ import {QuestionService} from "../../@core/services/question/question.service";
 import {DialogAddComponent} from "../dialog-add/dialog-add.component";
 import {AnswerDto} from "../../@core/dtos/AnswerDto";
 import {AnswerService} from "../../@core/services/answer/answer.service";
-import {MatRadioChange} from "@angular/material/radio";
 import {DialogEditComponent} from "../dialog-edit/dialog-edit.component";
 
 @Component({
@@ -23,7 +22,6 @@ export class DialogSettingsComponent implements OnInit {
   currentAnswer = '';
   form!: FormGroup;
   editing: boolean = false;
-  correct: any;
   correctAnswer!: number;
 
   constructor(
@@ -52,15 +50,8 @@ export class DialogSettingsComponent implements OnInit {
     })
   }
 
-  onAnswerChange(event: MatRadioChange) {
-    console.log(event.value)
-    this.correctAnswer = event.value;
-  }
-
-  async onClick(question: any): Promise<void> {
-    console.log(question)
-    this.currentQuestion = question;
-    const ans = await this.getAllByQuestionId(1);
+  async onClick(questionId: number): Promise<void> {
+    const ans = await this.getAllByQuestionId(questionId);
   }
 
   public async getAll(): Promise<void> {
@@ -85,6 +76,7 @@ export class DialogSettingsComponent implements OnInit {
   async deleteById(questionId: number): Promise<void> {
     console.log(questionId)
     await this.questionService.deleteById(questionId);
+    this.dialogRef.close();
   }
 
   public async update(): Promise<void> {
@@ -115,9 +107,16 @@ export class DialogSettingsComponent implements OnInit {
     });
   }
 
-  openDialogEdit(question?: QuestionDto) {
-    this.dialog.open(DialogEditComponent).afterClosed().subscribe(response => {
-    });
+  openDialogEdit(question: QuestionDto) {
+    this.dialog.open(DialogEditComponent, {
+      data: {
+        question,
+        answers: this.answers
+      }
+    })
+      .afterClosed()
+      .subscribe(response => {
+      });
   }
 
   cancel() {

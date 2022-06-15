@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {QuestionDto} from "../../@core/dtos/QuestionDto";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
@@ -12,55 +12,49 @@ import {AnswerService} from "../../@core/services/answer/answer.service";
   styleUrls: ['./dialog-start-game.component.scss']
 })
 export class DialogStartGameComponent implements OnInit {
-  @Input() title: string | undefined;
   questionsDto: QuestionDto = new QuestionDto();
   answersDto: AnswerDto = new AnswerDto();
   questions: QuestionDto[] = [];
   answers: AnswerDto[] = [];
   form!: FormGroup;
   editing: boolean = false;
-  mainPage: QuestionDto = new QuestionDto();
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { question: string, answer: string, id: number },
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogStartGameComponent>,
     private questionService: QuestionService,
     private answerService: AnswerService,
-    @Inject(MAT_DIALOG_DATA) public data: { question: string, answer: string, id: number },
   ) {
   }
 
   ngOnInit(): void {
+    console.log("data ", this.data);
     this.initForm();
-    this.getAll();
-    this.getById(this.data.id);
-    for (let i = 0; i < 4; i++) {
-      let x = new AnswerDto();
-      this.answers.push(x);
-    }
   }
 
-  initForm(data?: QuestionDto): void {
+  initForm(data?: AnswerDto): void {
     this.form = this.formBuilder.group({
-      id: [[data && data.id ? data.id : ''], [Validators.required]],
-      question: [[data && data.question ? data.question : ''], [Validators.required]],
+      question: [data && data.question ? data.question : '', [Validators.required]],
+      answer: [data && data.answer ? data.answer : '', [Validators.required]],
     });
   }
 
-  public async getAll(): Promise<void> {
+  public async getById(id: number): Promise<void> {
     try {
-      this.questions = await this.questionService.getAll();
-      console.log(this.questions);
+      this.questionsDto = await this.questionService.getById(id);
+      console.log(this.questionsDto);
     } catch (error) {
       console.log(error);
     }
   }
 
-  public async getById(id: number): Promise<void> {
+  public async getAllByQuestionId(id: number): Promise<any> {
     try {
-      this.answers = await this.answerService.getById(id);
-      console.log(this.answers);
+      const answer: AnswerDto[] = await this.answerService.getAllByQuestionId(id);
+      this.answers = answer;
+      console.log(answer);
     } catch (error) {
       console.log(error);
     }

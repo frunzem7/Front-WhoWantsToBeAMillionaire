@@ -7,24 +7,26 @@
     <div class="flex-container">
       <mat-accordion>
 
-<!--        <mat-expansion-panel hideToggle *cdkVirtualFor="let question of questions; let i = index;"-->
-<!--                             (click)="onClick(question.id)">-->
-        <mat-expansion-panel hideToggle *cdkVirtualFor="let question of questions; let i = index;"
-                             (afterExpand)="" )="onClick(question.id)">
+        <mat-expansion-panel hideToggle *cdkVirtualFor="let question of questions"
+                             (afterExpand)="onClick(question.id)">
           <mat-expansion-panel-header>{{question.question}}</mat-expansion-panel-header>
 
-          <div class="question" *ngFor="let answer of answers; let i = index">
-            {{answer.answer}}
-          </div>
+          <mat-radio-group>
+            <mat-radio-button disabled *ngFor="let answer of answers"
+                              [checked]="answer.isCorrect"
+                              [value]="answer">
+              {{answer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
 
-          <button mat-raised-button color="primary" mat-button class="save-button"
+          <button mat-mini-fab color="primary" mat-button class="edit-button"
                   (click)="openDialogEdit(question)">
-            Edit
+            <mat-icon>edit</mat-icon>
           </button>
 
-          <button mat-raised-button color="primary" mat-button class="delete-button"
+          <button mat-mini-fab color="primary" mat-button class="delete-button"
                   (click)="deleteById(question?.id)">
-            Delete
+            <mat-icon>delete</mat-icon>
           </button>
 
         </mat-expansion-panel>
@@ -41,7 +43,7 @@
 
     <button mat-mini-fab color="primary" mat-button class="mat-button-cancel-right"
             (click)="cancel()">
-      <mat-icon> cancel_presentation</mat-icon>
+      <mat-icon>cancel_presentation</mat-icon>
     </button>
   </mat-card-actions>
 

@@ -22,7 +22,7 @@ export class DialogAddComponent implements OnInit {
   answers: AnswerDto[] = [];
   editing: boolean = false;
   form!: FormGroup;
-  correctAnswer!: number;
+  correctAnswer: number = 0;
 
   constructor(
     private answerService: AnswerService,
@@ -57,12 +57,15 @@ export class DialogAddComponent implements OnInit {
     for (let i = 0; i < this.answers.length; i++) {
       this.answers[i].answer = this.answersComponents.get(i)?.answer;
       this.answers[i].question = questionDto;
+
     }
+    this.answers[this.correctAnswer].isCorrect = true;
     console.log(this.answers)
     console.log(questionDto);
     for (let i = 0; i < this.answers.length; i++) {
       await this.answerService.save(this.answers[i]);
     }
+    this.dialogRef.close();
   }
 
   public async update(): Promise<void> {
