@@ -39,7 +39,7 @@ export class DialogAddComponent implements OnInit {
   }
 
   onAnswerChange(event: MatRadioChange) {
-    console.log(event.value)
+    console.log("correctAnswer", event.value)
     this.correctAnswer = event.value;
   }
 
@@ -53,15 +53,13 @@ export class DialogAddComponent implements OnInit {
     console.log(this.questionComponent.form)
     console.log(questionDto)
     console.log(this.answers[this.correctAnswer])
-    console.log(this.correctAnswer)
     for (let i = 0; i < this.answers.length; i++) {
       this.answers[i].answer = this.answersComponents.get(i)?.answer;
       this.answers[i].question = questionDto;
-
     }
+    console.log("asnw ",this.answers)
+    console.log("correctAnswer ",this.correctAnswer)
     this.answers[this.correctAnswer].isCorrect = true;
-    console.log(this.answers)
-    console.log(questionDto);
     for (let i = 0; i < this.answers.length; i++) {
       await this.answerService.save(this.answers[i]);
     }

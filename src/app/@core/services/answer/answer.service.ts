@@ -29,6 +29,7 @@ export class AnswerService {
   }
 
   update(mainPage: AnswerDto): Promise<AnswerDto> {
+    console.log(mainPage);
     return lastValueFrom(this.http.put<AnswerDto>(`${this.url}/`, mainPage));
   }
 
