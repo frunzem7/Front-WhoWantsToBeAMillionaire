@@ -57,8 +57,8 @@ export class DialogAddComponent implements OnInit {
       this.answers[i].answer = this.answersComponents.get(i)?.answer;
       this.answers[i].question = questionDto;
     }
-    console.log("asnw ",this.answers)
-    console.log("correctAnswer ",this.correctAnswer)
+    console.log("asnw ", this.answers)
+    console.log("correctAnswer ", this.correctAnswer)
     this.answers[this.correctAnswer].isCorrect = true;
     for (let i = 0; i < this.answers.length; i++) {
       await this.answerService.save(this.answers[i]);

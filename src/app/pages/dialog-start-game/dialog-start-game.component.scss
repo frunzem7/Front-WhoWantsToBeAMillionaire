@@ -1,3 +1,25 @@
+.quiz-box .question-number,
+  .quiz-box .question-text,
+  .quiz-box .question-option
+  {
+    width: 100%;
+    float: left;
+  }
+
+  .quiz-box .question-option .question{
+    background-color: #cccccc;
+    padding: 13px 15px;
+    font-size: 16px;
+    line-height: 22px;
+    color: black;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    opacity: 1;
+    position: relative;
+    overflow: hidden;
+  }
 .full-width {
   width: 100%;
 }

@@ -1,35 +1,35 @@
 <h3>"Who wants to be a millionaire?"</h3>
-<form [formGroup]="form">
-  <div class="container">
-    <div class="score">
-      <h5>20 Points</h5>
-    </div>
 
-    <div class="question-remain">
-      <span style="font-style: italic;">Question 1 of 5</span>
-    </div>
-
-    <div class="time">
-      60 sec
-    </div>
-
-    <div class="progress">
-      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-    </div>
+<div>
+  <div>
+    <h3> {{questionList[currentQuestion]?.question}}</h3>
   </div>
+</div>
 
-  <div *ngFor="let question of questions">{{question.question}}</div>
+<div>
+  <ol *ngFor="let option of questionList[currentQuestion]?.options; let i=index">
+    <li (click)=disable(questionList[currentQuestion].options,option)>
+      <label><input type="radio" name="options" value={{option}}> {{option}}</label>
+    </li>
+  </ol>
+</div>
 
-  <mat-radio-group>
-    <mat-radio-button *ngFor="let answer of answers"
-                      [checked]="answer.isCorrect"
-                      [value]="answer">
-      {{answer.answer}}
-    </mat-radio-button>
-  </mat-radio-group>
+<mat-radio-group>
+  <mat-radio-button *ngFor="let answer of answers">
+    <label>
+      <input type="radio" name="fav_language" [value]="answer" [checked]="isChecked(answer)"/>
+      {{answer}}
+    </label>
+  </mat-radio-button>
+</mat-radio-group>
 
-  <div class="mat-button">
-    <button mat-raised-button color="primary">B A C K</button>
-    <button mat-raised-button color="primary">N E X T</button>
-  </div>
-</form>
+<div>
+  <button mat-raised-button color="primary" [disabled]="currentQuestion===0" (click)="previousQuestion()">
+    Back
+  </button>
+
+  <button mat-raised-button color="primary" [disabled]="currentQuestion===(questionList.length-1)"
+          (click)="nextQuestion()">
+    Next
+  </button>
+</div>
